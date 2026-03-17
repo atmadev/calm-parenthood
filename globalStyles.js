@@ -81,7 +81,7 @@ buttonsRow: {
   tipBox: {
     backgroundColor: '#ffffff',
     borderRadius: 20,
-    padding: 20,
+    paddingHorizontal: 20,
     width: 340, // завжди вся ширина картки
     marginTop: 30,
 
