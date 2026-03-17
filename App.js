@@ -28,6 +28,7 @@ import { SvgXml } from 'react-native-svg';
 import { icons } from './icons';
 
 import { EMOTIONS, TIPS, TIPSBAD, TIPSGOOD } from './content';
+import { getNextInRotation } from './rotationState';
 import { globalStyles as styles } from './globalStyles';
 
 const SCREENS = {
@@ -135,32 +136,40 @@ export default function App() {
     animateToScreenState({ screen: SCREENS.MORE });
   }
 
-  function tryAgain() {
+  async function tryAgain() {
     const pool = TIPSBAD;
-    const tipBad =
-      pool && pool.length > 0
-        ? pool[Math.floor(Math.random() * pool.length)]
-        : '';
+    const poolLength = pool ? pool.length : 0;
+    let tipBad = '';
+    if (poolLength > 0) {
+      const index = await getNextInRotation('TIPSBAD', poolLength);
+      if (index !== null && index >= 0 && index < poolLength) {
+        tipBad = pool[index];
+      }
+    }
     animateToScreenState({ screen: SCREENS.TRY_AGAIN, tip: tipBad, emotion });
   }
 
-    function success() {
-  const pool = TIPSGOOD;
-  const tipGood =
-    pool && pool.length > 0
-      ? pool[Math.floor(Math.random() * pool.length)]
-      : '';
-  animateToScreenState({ screen: SCREENS.SUCCESS, tip: tipGood, emotion });
-}
+  async function success() {
+    const pool = TIPSGOOD;
+    const poolLength = pool ? pool.length : 0;
+    let tipGood = '';
+    if (poolLength > 0) {
+      const index = await getNextInRotation('TIPSGOOD', poolLength);
+      if (index !== null && index >= 0 && index < poolLength) {
+        tipGood = pool[index];
+      }
+    }
+    animateToScreenState({ screen: SCREENS.SUCCESS, tip: tipGood, emotion });
+  }
 
-  function showRandomTip(key = emotion) {
+  async function showRandomTip(key = emotion) {
     if (!key) return;
     const pool = TIPS[key];
-    if (!pool?.length) return;
-    let candidate = pool[Math.floor(Math.random() * pool.length)];
-    if (pool.length > 1 && candidate === tip) {
-      candidate = pool[(pool.indexOf(candidate) + 1) % pool.length];
-    }
+    const poolLength = pool ? pool.length : 0;
+    if (!poolLength) return;
+    const index = await getNextInRotation(key, poolLength);
+    if (index === null || index < 0 || index >= poolLength) return;
+    const candidate = pool[index];
     if (Platform.OS !== 'web') Haptics.selectionAsync();
 
     const newState = { screen: SCREENS.TIP, emotion: key, tip: candidate };
@@ -337,13 +346,11 @@ export default function App() {
         <View style={styles.buttonsRow}>
           <SecondaryButton
             title="Спробую ще"
-            style={styles.tryBtn}
             onPress={() => showRandomTip()}
             style={{ flex: 1, backgroundColor: '#747DB8' }}
           />
           <PrimaryButton
             title="На головну"
-            style={styles.tryBtn}
             onPress={goHome}
             style={{ flex: 1, backgroundColor: '#747DB8' }}
           />
