@@ -169,14 +169,14 @@ export default function App() {
   const [screenState, setScreenState] = React.useState({
     screen: SCREENS.HOME,
   });
-  const [currentGradientColors, setCurrentGradientColors] = React.useState(
-    gradientColorsFor(SCREENS.HOME)
+  const [currentBGSource, setCurrentBGSource] = React.useState(
+    getBackgroundSourceFor({ screen: SCREENS.HOME })
   );
-  const [nextGradientColors, setNextGradientColors] = React.useState([]);
+  const [nextBGSource, setNextBGSource] = React.useState(undefined);
 
   const fadeAnim = React.useRef(new Animated.Value(1)).current;
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
-  const gradientToFadeAnim = React.useRef(new Animated.Value(0)).current;
+  const bgFadeAnim = React.useRef(new Animated.Value(0)).current;
   const screen = screenState.screen;
   const tip = Object.hasOwn(screenState, 'tip') ? screenState.tip : '';
   const emotion = Object.hasOwn(screenState, 'emotion')
@@ -208,24 +208,22 @@ export default function App() {
       duration: 250,
     };
 
-    if (
-      gradientColorsFor(state.screen).toString() !=
-      currentGradientColors.toString()
-    ) {
-      Animated.timing(gradientToFadeAnim, {
+    const nextBg = getBackgroundSourceFor({ screen: state.screen, emotionKey: state.emotion });
+    if (nextBg !== currentBGSource) {
+      Animated.timing(bgFadeAnim, {
         ...baseConfig,
         duration: baseConfig.duration * 2,
         toValue: 1,
       }).start(() => {
-        setCurrentGradientColors(() => {
+        setCurrentBGSource(() => {
           setTimeout(() => {
-            setNextGradientColors([]);
-            setTimeout(() => gradientToFadeAnim.setValue(0), 100);
-          });
-          return gradientColorsFor(state.screen);
+            setNextBGSource(undefined);
+            setTimeout(() => bgFadeAnim.setValue(0), 100);
+          }, 200);
+          return nextBg;
         });
       });
-      setNextGradientColors(gradientColorsFor(state.screen));
+      setNextBGSource(nextBg);
     }
 
     Animated.parallel([
@@ -833,7 +831,6 @@ export default function App() {
   };
 
   const gradientVector = gradientVectorFor(screen);
-  const bgSource = getBackgroundSourceFor({ screen, emotionKey: emotion });
   // `cover` fills the screen while keeping proportions (may crop a bit).
   // On some devices/web, scaling can leave a 1px seam; a tiny scale overscan fixes it.
   const bgResizeMode = 'cover';
@@ -843,40 +840,52 @@ export default function App() {
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <View style={styles.root}>
         <DisclaimerModal />
-        {!!bgSource && (
+        {!!currentBGSource && (
           <Animated.Image
-            source={bgSource}
+            source={currentBGSource}
             resizeMode={bgResizeMode}
             style={[
               StyleSheet.absoluteFillObject,
               {
                 transform: [{ scale: bgScaleOverscan }],
               },
-              { opacity: fadeAnim },
             ]}
           />
         )}
-        {!bgSource && currentGradientColors.length > 0 && (
+        {!currentBGSource && (
           <LinearGradient
-            colors={currentGradientColors}
+            colors={gradientColorsFor(screen)}
             style={StyleSheet.absoluteFillObject}
             start={gradientVector.start}
             end={gradientVector.end}
           />
         )}
 
-        {!bgSource && nextGradientColors.length > 0 && (
+        {nextBGSource !== undefined && (
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,
-              { opacity: gradientToFadeAnim },
+              { opacity: bgFadeAnim },
             ]}>
-            <LinearGradient
-              colors={nextGradientColors}
-              style={StyleSheet.absoluteFillObject}
-              start={gradientVector.start}
-              end={gradientVector.end}
-            />
+            {nextBGSource ? (
+              <Animated.Image
+                source={nextBGSource}
+                resizeMode={bgResizeMode}
+                style={[
+                  StyleSheet.absoluteFillObject,
+                  {
+                    transform: [{ scale: bgScaleOverscan }],
+                  },
+                ]}
+              />
+            ) : (
+              <LinearGradient
+                colors={gradientColorsFor(screen)}
+                style={StyleSheet.absoluteFillObject}
+                start={gradientVector.start}
+                end={gradientVector.end}
+              />
+            )}
           </Animated.View>
         )}
         <View style={StyleSheet.absoluteFillObject}>{Content}</View>
