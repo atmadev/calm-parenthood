@@ -36,14 +36,14 @@ buttonsRow: {
     paddingBottom: 8,
   },
   headerBtn: {
-    backgroundColor: '#1a2742',
+    backgroundColor: '#622626',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 12,
   },
   headerBtnDisabled: { opacity: 0.6 },
   headerBtnText: {
-    color: 'white',
+    color: '#622626',
     fontWeight: '700',
   },
 
@@ -122,12 +122,12 @@ buttonsRow: {
 
   title: {
     fontFamily: 'Kurale_400Regular',
-    color: '#804550',
-    fontSize: 35,
+    color: '#622626',
+    fontSize: 40,
     fontWeight: '500',
     textAlign: 'center',
-    lineHeight: 37,
-    marginBottom: 30, // відстань між заголовком і контентом
+    lineHeight: 42,
+    marginBottom: 20, // відстань між заголовком і контентом
   },
 
   titleGreen: {
@@ -163,7 +163,7 @@ fontSize: 40,
   },
 
   btn: {
-    backgroundColor: '#2a77ff',
+    backgroundColor: '#9D5354', opacity: 0.7,
     paddingVertical: 12,
     borderRadius: 14,
     alignItems: 'center',
@@ -177,41 +177,42 @@ fontSize: 40,
 
   emoBtn: {
     backgroundColor: '#ffffff',
-    paddingVertical: 12,
-    borderRadius: 14,
+    alignSelf: 'stretch',
+    width: '100%',
+    minHeight: 84,
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    width: '45%',
-    height: 200,
+    justifyContent: 'space-between',
 
-    // тінь для iOS
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.2,
-  shadowRadius: 3,
-
-  // тінь для Android
-  elevation: 3,
-    
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 1,
   },
   emojiBtnText: {
-    fontFamily: 'Geologica_400Bold',
-    color: '#804550',
-    fontSize: 50,
-    fontWeight: '700',
-    marginBottom: 1,
+    fontSize: 40,
+    lineHeight: 44,
+    marginRight: 10,
   },
   emoBtnText: {
-    fontFamily: 'Geologica_400Bold',
+    flex: 1,
+    fontFamily: 'Geologica_700Bold',
     color: '#804550',
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 20,
+    lineHeight: 24,
+    marginLeft: 12,
   },
   btnSubText: {
     fontFamily: 'Geologica_400Regular',
     color: '#804550',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
+    marginLeft: 14,
+    marginRight: 14,
   },
 
   btnSecondary: {

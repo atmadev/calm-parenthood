@@ -1,8 +1,8 @@
 export const EMOTIONS = [
-  { key: 'angry',      label: 'Злюсь',    range: '75°', emoji: '😡' },
   { key: 'furious',    label: 'Лютую',    range: '100°', emoji: '🤬' },
-  { key: 'frustrated', label: 'Фруструю', range: '25°', emoji: '😖' },
+  { key: 'angry',      label: 'Злюсь',    range: '75°', emoji: '😡' },
   { key: 'irritated',  label: 'Дратуюсь', range: '50°', emoji: '😤' },
+  { key: 'frustrated', label: 'Фруструю', range: '25°', emoji: '😖' },
 
 ];
 

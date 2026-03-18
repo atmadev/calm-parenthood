@@ -322,6 +322,21 @@ export default function App() {
     );
   }
 
+  const emotionThemeFor = (key) => {
+    // Matches the screenshot: darker cards at the top, lighter towards the bottom.
+    switch (key) {
+      case 'furious':
+        return { bg: '#622626', text: '#FBFBFB', sub: '#FBFBFB' };
+      case 'angry':
+        return { bg: '#9D5354', text: '#FBFBFB', sub: '#FBFBFB' };
+      case 'irritated':
+        return { bg: '#C8936E', text: '#FBFBFB', sub: '#FBFBFB' };
+      case 'frustrated':
+      default:
+        return { bg: '#E9D9A8', text: '#622626', sub: '#622626' };
+    }
+  };
+
   function Home() {
     return (
       <CenterCard
@@ -333,14 +348,16 @@ export default function App() {
         }>
         <View
           style={{
-            gap: 20,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            justifyContent: 'center',
+            gap: 10,
+            flexDirection: 'column', // ⬅️ головне
+            alignItems: 'stretch', // щоб кнопки були на всю ширину
+            alignSelf: 'stretch',
           }}>
           {EMOTIONS.map((it) => (
             <EmotionButton
               key={it.key}
+              emotionKey={it.key}
+              theme={emotionThemeFor(it.key)}
               emoji={it.emoji}
               title={it.label}
               subtitle={it.range}
@@ -737,12 +754,12 @@ export default function App() {
           <SecondaryButton
             title="Спробую ще"
             onPress={() => showRandomTip()}
-            style={{ flex: 1, backgroundColor: '#747DB8' }}
+            style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
           />
           <PrimaryButton
             title="На головну"
             onPress={goHome}
-            style={{ flex: 1, backgroundColor: '#747DB8' }}
+            style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
           />
         </View>
       </CenterCard>
@@ -778,6 +795,16 @@ export default function App() {
     </>
   );
 
+  const gradientVectorFor = (screenKey) => {
+    // Home needs a true top->bottom gradient; others keep the existing diagonal.
+    if (screenKey === SCREENS.HOME) {
+      return { start: { x: 0, y: 0 }, end: { x: 0, y: 1 } };
+    }
+    return { start: { x: 0, y: 0 }, end: { x: 1, y: 1 } };
+  };
+
+  const gradientVector = gradientVectorFor(screen);
+
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <View style={styles.root}>
@@ -786,8 +813,8 @@ export default function App() {
           <LinearGradient
             colors={currentGradientColors}
             style={StyleSheet.absoluteFillObject}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
+            start={gradientVector.start}
+            end={gradientVector.end}
           />
         )}
 
@@ -800,8 +827,8 @@ export default function App() {
             <LinearGradient
               colors={nextGradientColors}
               style={StyleSheet.absoluteFillObject}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
+              start={gradientVector.start}
+              end={gradientVector.end}
             />
           </Animated.View>
         )}
@@ -815,7 +842,10 @@ export default function App() {
 /* ====== утиліти / кнопки ====== */
 
 function gradientColorsFor(screen) {
-  if ([SCREENS.HOME, SCREENS.TIP, SCREENS.CHECK].includes(screen)) {
+  if (screen === SCREENS.HOME) {
+    return ['#F7F2E4', '#FBFBFB'];
+  }
+  if ([SCREENS.TIP, SCREENS.CHECK].includes(screen)) {
     return ['#F5A488', '#F1B4BB', '#EB9EA7']; // 1-3 екрани
   } else if (screen === SCREENS.SUCCESS) {
     return ['#EAD2AC', '#F0F0F0']; // success
@@ -831,7 +861,9 @@ function CenterCard({ title, children }) {
       {title && (
         <Text style={[styles.title, { marginBottom: 50 }]}>{title}</Text>
       )}
-      <View style={{ gap: 10 }}>{children}</View>
+      <View style={{ gap: 12, width: '100%', maxWidth: 340, alignSelf: 'center' }}>
+        {children}
+      </View>
     </View>
   );
 }
@@ -864,14 +896,26 @@ function SecondaryButton({ title, onPress, style }) {
   );
 }
 
-function EmotionButton({ emoji, title, subtitle, onPress }) {
+function EmotionButton({ emotionKey, theme, emoji, title, subtitle, onPress }) {
+  const bg = theme?.bg ?? '#FBFBFB';
+  const text = theme?.text ?? '#804550';
+  const sub = theme?.sub ?? '#FBFBFB';
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [styles.emoBtn, pressed && { opacity: 0.9 }]}>
-      <Text style={styles.emojiBtnText}>{emoji}</Text>
-      <Text style={styles.emoBtnText}>{title}</Text>
-      <Text style={styles.btnSubText}>{subtitle}</Text>
+      accessibilityRole="button"
+      accessibilityLabel={title}
+      testID={`emotion-btn-${emotionKey ?? title}`}
+      style={({ pressed }) => [
+        styles.emoBtn,
+        { backgroundColor: bg },
+        pressed && { opacity: 0.92, transform: [{ scale: 0.99 }] },
+      ]}>
+      <Text style={[styles.emoBtnText, { color: text }]} numberOfLines={1}>
+        {title}
+      </Text>
+      <Text style={[styles.btnSubText, { color: sub }]}>{subtitle}</Text>
+      <Text style={[styles.emojiBtnText, { color: text }]}>{emoji}</Text>
     </Pressable>
   );
 }
