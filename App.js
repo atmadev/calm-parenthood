@@ -10,6 +10,7 @@ import {
   Animated,
   Easing,
   StyleSheet,
+  PixelRatio,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useFonts } from 'expo-font';
@@ -833,6 +834,10 @@ export default function App() {
 
   const gradientVector = gradientVectorFor(screen);
   const bgSource = getBackgroundSourceFor({ screen, emotionKey: emotion });
+  // `cover` fills the screen while keeping proportions (may crop a bit).
+  // On some devices/web, scaling can leave a 1px seam; a tiny scale overscan fixes it.
+  const bgResizeMode = 'cover';
+  const bgScaleOverscan = 1 + 2 / Math.max(1, PixelRatio.getPixelSizeForLayoutSize(1000));
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
@@ -841,9 +846,12 @@ export default function App() {
         {!!bgSource && (
           <Animated.Image
             source={bgSource}
-            resizeMode="cover"
+            resizeMode={bgResizeMode}
             style={[
               StyleSheet.absoluteFillObject,
+              {
+                transform: [{ scale: bgScaleOverscan }],
+              },
               { opacity: fadeAnim },
             ]}
           />
