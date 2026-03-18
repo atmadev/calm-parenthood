@@ -33,6 +33,12 @@ import { icons } from './icons';
 import { EMOTIONS, TIPS, TIPSBAD, TIPSGOOD } from './content';
 import { getNextInRotation } from './rotationState';
 import { globalStyles as styles } from './globalStyles';
+import {
+  getBackgroundSourceFor,
+  getCheckTheme,
+  getEmotionTheme,
+  getHeaderIconColorFor,
+} from './emotionTheme';
 
 const SCREENS = {
   HOME: 'HOME',
@@ -296,6 +302,7 @@ export default function App() {
   function Header() {
     const safeInsets = useSafeAreaInsets();
     const isHome = screen === SCREENS.HOME;
+    const iconColor = getHeaderIconColorFor({ screen, emotionKey: emotion });
     return (
       <View
         style={{
@@ -315,27 +322,17 @@ export default function App() {
               pressed && !isHome && { opacity: 0.8 },
             ]}
             hitSlop={10}>
-            <SvgXml xml={icons.home} width={30} height={30} color="#EFEFEF" />
+            <SvgXml
+              xml={icons.home}
+              width={30}
+              height={30}
+              color={iconColor}
+            />
           </Pressable>
         </View>
       </View>
     );
   }
-
-  const emotionThemeFor = (key) => {
-    // Matches the screenshot: darker cards at the top, lighter towards the bottom.
-    switch (key) {
-      case 'furious':
-        return { bg: '#622626', text: '#FBFBFB', sub: '#FBFBFB' };
-      case 'angry':
-        return { bg: '#9D5354', text: '#FBFBFB', sub: '#FBFBFB' };
-      case 'irritated':
-        return { bg: '#C8936E', text: '#FBFBFB', sub: '#FBFBFB' };
-      case 'frustrated':
-      default:
-        return { bg: '#E9D9A8', text: '#622626', sub: '#622626' };
-    }
-  };
 
   function Home() {
     return (
@@ -357,7 +354,7 @@ export default function App() {
             <EmotionButton
               key={it.key}
               emotionKey={it.key}
-              theme={emotionThemeFor(it.key)}
+              theme={getEmotionTheme(it.key)}
               emoji={it.emoji}
               title={it.label}
               subtitle={it.range}
@@ -509,16 +506,19 @@ export default function App() {
     const insets = useSafeAreaInsets();
     const tipScroll = useScrollToEndAffordance();
     const maxTipBoxHeight = Math.min(
-      440,
-      Math.max(240, Math.floor((height - insets.top - insets.bottom) * 0.42))
+      580,
+      Math.max(320, Math.floor((height - insets.top - insets.bottom) * 0.65))
     );
     const emotionKey = screenState.emotion;
     const meta = EMOTIONS.find((e) => e.key === emotionKey);
+    const theme = getEmotionTheme(emotionKey);
 
     return (
       <CenterCard>
         <Text style={styles.tipEmoji}>{meta.emoji}</Text>
-        <Text style={styles.tipEmotion}>{meta.label}</Text>
+        <Text style={[styles.tipEmotion, { color: theme.titleColor }]}>
+          {meta.label}
+        </Text>
 
         <View
           style={[
@@ -528,7 +528,7 @@ export default function App() {
           <ScrollView
             ref={tipScroll.scrollRef}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
+            contentContainerStyle={{ paddingTop: 18, paddingBottom: 12 }}
             onScroll={tipScroll.onScroll}
             scrollEventThrottle={16}
             onLayout={tipScroll.onLayout}
@@ -551,38 +551,27 @@ export default function App() {
             />
           </View>
 
-          {tipScroll.show && (
-            <Pressable
-              onPress={tipScroll.scrollToEnd}
-              hitSlop={10}
-              style={({ pressed }) => [
-                localStyles.scrollToEndBtn,
-                pressed && { opacity: 0.9 },
-              ]}>
-              <Text style={localStyles.scrollToEndBtnText}>↓</Text>
-            </Pressable>
-          )}
-        </View>
-
-        <View style={styles.buttonsRow}>
-          <SecondaryButton
-            title="Спробую інше"
-            onPress={() => showRandomTip()}
-            style={{ flex: 1 }}
-          />
-          <PrimaryButton
-            title="Виконано"
-            onPress={() => {
-              animateToScreenState({ screen: SCREENS.CHECK, emotion });
-            }}
-            style={{ flex: 1 }}
-          />
+          <View style={[styles.buttonsRow, { paddingTop: 12, paddingBottom: 16 }]}>
+            <SecondaryButton
+              title="Спробую інше"
+              onPress={() => showRandomTip()}
+              style={{ flex: 1, marginTop: 0, marginBottom: 7 }}
+            />
+            <PrimaryButton
+              title="Виконано"
+              onPress={() => {
+                animateToScreenState({ screen: SCREENS.CHECK, emotion });
+              }}
+              style={{ flex: 1, marginTop: 0, marginBottom: 7 }}
+            />
+          </View>
         </View>
       </CenterCard>
     );
   }
 
   function Check() {
+    const checkTheme = getCheckTheme(emotion);
     return (
       <CenterCard>
         <View
@@ -593,16 +582,27 @@ export default function App() {
           <View style={{ marginBottom: 10 }}>
             <Text style={styles.emojiTitle}>🥺</Text>
           </View>
-          <Text style={styles.title}>
+          <Text style={[styles.title, { color: checkTheme.titleColor }]}>
             Чи вдалось{'\n'}понизити градус{'\n'}напруги?
           </Text>
         </View>
         <View style={styles.buttonsRow}>
           <PrimaryButton
             title="Так"
-              onPress={success}
+            onPress={success}
+            style={{
+              backgroundColor: checkTheme.buttonBg,
+              opacity: checkTheme.buttonOpacity,
+            }}
           />
-          <SecondaryButton title="Ні" onPress={tryAgain} />
+          <SecondaryButton
+            title="Ні"
+            onPress={tryAgain}
+            style={{
+              backgroundColor: checkTheme.buttonBg,
+              opacity: checkTheme.buttonOpacity,
+            }}
+          />
         </View>
       </CenterCard>
     );
@@ -639,7 +639,7 @@ export default function App() {
           <ScrollView
             ref={successScroll.scrollRef}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
+            contentContainerStyle={{ paddingTop: 18, paddingBottom: 12 }}
             onScroll={successScroll.onScroll}
             scrollEventThrottle={16}
             onLayout={successScroll.onLayout}
@@ -672,14 +672,30 @@ export default function App() {
               <Text style={localStyles.scrollToEndBtnText}>↓</Text>
             </Pressable>
           )}
-        </View>
 
-        <View style={styles.buttonsRow}>
-          <PrimaryButton
-            title="На головну"
-            style={styles.sucBtn}
-            onPress={goHome}
-          />
+          <View
+            style={[
+              styles.buttonsRow,
+              {
+                paddingTop: 12,
+                paddingBottom: 16,
+                paddingHorizontal: 0,
+              },
+            ]}>
+            <PrimaryButton
+              title="На головну"
+              style={[
+                styles.sucBtn,
+                {
+                  marginTop: 0,
+                  marginBottom: 7,
+                  alignSelf: 'stretch',
+                  width: '100%',
+                },
+              ]}
+              onPress={goHome}
+            />
+          </View>
         </View>
       </CenterCard>
     );
@@ -715,7 +731,7 @@ export default function App() {
           <ScrollView
             ref={tryAgainScroll.scrollRef}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
+            contentContainerStyle={{ paddingTop: 18, paddingBottom: 12 }}
             onScroll={tryAgainScroll.onScroll}
             scrollEventThrottle={16}
             onLayout={tryAgainScroll.onLayout}
@@ -748,19 +764,31 @@ export default function App() {
               <Text style={localStyles.scrollToEndBtnText}>↓</Text>
             </Pressable>
           )}
-        </View>
 
-        <View style={styles.buttonsRow}>
-          <SecondaryButton
-            title="Спробую ще"
-            onPress={() => showRandomTip()}
-            style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
-          />
-          <PrimaryButton
-            title="На головну"
-            onPress={goHome}
-            style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
-          />
+          <View style={[styles.buttonsRow, { paddingTop: 12, paddingBottom: 16 }]}>
+            <SecondaryButton
+              title="Спробую ще"
+              onPress={() => showRandomTip()}
+              style={{
+                flex: 1,
+                marginTop: 0,
+                marginBottom: 7,
+                backgroundColor: '#5A6394',
+                opacity: 0.7,
+              }}
+            />
+            <PrimaryButton
+              title="На головну"
+              onPress={goHome}
+              style={{
+                flex: 1,
+                marginTop: 0,
+                marginBottom: 7,
+                backgroundColor: '#5A6394',
+                opacity: 0.7,
+              }}
+            />
+          </View>
         </View>
       </CenterCard>
     );
@@ -804,12 +832,23 @@ export default function App() {
   };
 
   const gradientVector = gradientVectorFor(screen);
+  const bgSource = getBackgroundSourceFor({ screen, emotionKey: emotion });
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <View style={styles.root}>
         <DisclaimerModal />
-        {currentGradientColors.length > 0 && (
+        {!!bgSource && (
+          <Animated.Image
+            source={bgSource}
+            resizeMode="cover"
+            style={[
+              StyleSheet.absoluteFillObject,
+              { opacity: fadeAnim },
+            ]}
+          />
+        )}
+        {!bgSource && currentGradientColors.length > 0 && (
           <LinearGradient
             colors={currentGradientColors}
             style={StyleSheet.absoluteFillObject}
@@ -818,7 +857,7 @@ export default function App() {
           />
         )}
 
-        {nextGradientColors.length > 0 && (
+        {!bgSource && nextGradientColors.length > 0 && (
           <Animated.View
             style={[
               StyleSheet.absoluteFillObject,
@@ -897,9 +936,9 @@ function SecondaryButton({ title, onPress, style }) {
 }
 
 function EmotionButton({ emotionKey, theme, emoji, title, subtitle, onPress }) {
-  const bg = theme?.bg ?? '#FBFBFB';
-  const text = theme?.text ?? '#804550';
-  const sub = theme?.sub ?? '#FBFBFB';
+  const bg = theme?.cardBg ?? '#FBFBFB';
+  const text = theme?.cardTextColor ?? '#804550';
+  const sub = theme?.cardSubColor ?? '#FBFBFB';
   return (
     <Pressable
       onPress={onPress}

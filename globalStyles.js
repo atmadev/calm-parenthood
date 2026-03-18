@@ -43,7 +43,7 @@ buttonsRow: {
   },
   headerBtnDisabled: { opacity: 0.6 },
   headerBtnText: {
-    color: '#622626',
+    color: 'white',
     fontWeight: '700',
   },
 
@@ -67,7 +67,7 @@ buttonsRow: {
 
   tipEmoji: {
     fontFamily: 'Kurale_400Regular',
-    fontSize: 50,
+    fontSize: 40,
     textAlign: 'center',
     marginBottom: 0,
   },
@@ -83,7 +83,7 @@ buttonsRow: {
     borderRadius: 20,
     paddingHorizontal: 20,
     width: 340, // завжди вся ширина картки
-    marginTop: 30,
+    marginTop: 10,
 
 // тінь для iOS
   shadowColor: '#000',
@@ -99,7 +99,7 @@ buttonsRow: {
     fontFamily: 'Geologica_700Bold',
     fontSize: 16,
     lineHeight: 22,
-    color: '#7D6C2C',
+    color: '#5D5D5D',
     textAlign: 'center',
       marginBottom: 8,
       
@@ -109,7 +109,7 @@ buttonsRow: {
     fontFamily: 'Geologica_400Regular',
     fontSize: 16,
     lineHeight: 22,
-    color: '#7D6C2C',
+    color: '#5D5D5D',
     textAlign: 'left',
   },
   buttonsRow: {
@@ -132,7 +132,7 @@ buttonsRow: {
 
   titleGreen: {
     fontFamily: 'Kurale_400Regular',
-    color: '#7D6C2C',
+    color: '#524B31',
     fontSize: 35,
     fontWeight: '500',
     textAlign: 'center',
@@ -157,7 +157,7 @@ fontSize: 40,
 
   bodyText: {
     fontFamily: 'Geologica_400Regular',
-    color: '#cfe0ff',
+    color: '#5D5D5D',
     fontSize: 16,
     textAlign: 'center',
   },
