@@ -1137,9 +1137,9 @@ const localStyles = StyleSheet.create({
     borderWidth: 0,
   },
   scrollToEndBtnInTextBox: {
-    right: 20,
-    bottom: 20,
-    backgroundColor: '#622626',
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#DBCB97',
     borderWidth: 0,
   },
   scrollToEndBtnText: {
