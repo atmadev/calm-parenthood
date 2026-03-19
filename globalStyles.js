@@ -86,21 +86,18 @@ buttonsRow: {
     marginTop: -20,
   },
   tipBox: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FBFBFB',
     borderRadius: 20,
     paddingHorizontal: 20,
     width: 340, // завжди вся ширина картки
     marginTop: 10,
 
-// тінь для iOS
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.2,
-  shadowRadius: 3,
-
-  // тінь для Android
-  elevation: 3,
-
+    // тінь як у кнопок емоцій
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 1,
   },
   tipTextName: {
     fontFamily: 'Geologica_700Bold',
@@ -151,7 +148,7 @@ buttonsRow: {
 
   titleWhite: {
     fontFamily: 'Kurale_400Regular',
-    color: '#ffffff',
+    color: '#FBFBFB',
     fontSize: 35,
     fontWeight: '500',
     textAlign: 'center',
@@ -185,7 +182,7 @@ fontSize: 40,
   },
 
   emoBtn: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FBFBFB',
     alignSelf: 'stretch',
     width: '100%',
     minHeight: 84,

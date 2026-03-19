@@ -527,35 +527,19 @@ export default function App() {
           {meta.label}
         </Text>
 
-        <View
-          style={[
-            styles.tipBox,
-            { maxHeight: maxTipBoxHeight, overflow: 'hidden' },
-          ]}>
-          <ScrollView
-            ref={tipScroll.scrollRef}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
-            onScroll={tipScroll.onScroll}
-            scrollEventThrottle={16}
-            onLayout={tipScroll.onLayout}
-            onContentSizeChange={tipScroll.onContentSizeChange}>
-            <Text style={styles.tipTextName}>{tip.title}</Text>
-            <Text style={styles.tipText}>{tip.text}</Text>
-          </ScrollView>
-          <View pointerEvents="none" style={localStyles.tipBoxVerticalFades}>
-            <LinearGradient
-              colors={['rgb(255, 255, 255)',  'rgba(255,255,255,0)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={localStyles.tipBoxFadeTop}
-            />
-            <LinearGradient
-              colors={['rgba(255,255,255,0)', 'rgb(255, 255, 255)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={localStyles.tipBoxFadeBottom}
-            />
+        <View style={styles.tipBox}>
+          <View style={{ maxHeight: maxTipBoxHeight, overflow: 'hidden' }}>
+            <ScrollView
+              ref={tipScroll.scrollRef}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
+              onScroll={tipScroll.onScroll}
+              scrollEventThrottle={16}
+              onLayout={tipScroll.onLayout}
+              onContentSizeChange={tipScroll.onContentSizeChange}>
+              <Text style={styles.tipTextName}>{tip.title}</Text>
+              <Text style={styles.tipText}>{tip.text}</Text>
+            </ScrollView>
           </View>
 
           {tipScroll.show && (
@@ -650,34 +634,18 @@ export default function App() {
           </Text>
         </View>
 
-        <View
-          style={[
-            styles.tipBox,
-            { maxHeight: maxTipBoxHeight, overflow: 'hidden' },
-          ]}>
-          <ScrollView
-            ref={successScroll.scrollRef}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
-            onScroll={successScroll.onScroll}
-            scrollEventThrottle={16}
-            onLayout={successScroll.onLayout}
-            onContentSizeChange={successScroll.onContentSizeChange}>
-            <Text style={styles.tipText}>{tip}</Text>
-          </ScrollView>
-          <View pointerEvents="none" style={localStyles.tipBoxVerticalFades}>
-            <LinearGradient
-              colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={localStyles.tipBoxFadeTop}
-            />
-            <LinearGradient
-              colors={['rgba(255,255,255,0)', 'rgba(255,255,255,1)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={localStyles.tipBoxFadeBottom}
-            />
+        <View style={styles.tipBox}>
+          <View style={{ maxHeight: maxTipBoxHeight, overflow: 'hidden' }}>
+            <ScrollView
+              ref={successScroll.scrollRef}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
+              onScroll={successScroll.onScroll}
+              scrollEventThrottle={16}
+              onLayout={successScroll.onLayout}
+              onContentSizeChange={successScroll.onContentSizeChange}>
+              <Text style={styles.tipText}>{tip}</Text>
+            </ScrollView>
           </View>
 
           {successScroll.show && (
@@ -734,34 +702,18 @@ export default function App() {
           <Text style={styles.titleWhite}>Буває і так</Text>
         </View>
 
-        <View
-          style={[
-            styles.tipBox,
-            { maxHeight: maxTipBoxHeight, overflow: 'hidden' },
-          ]}>
-          <ScrollView
-            ref={tryAgainScroll.scrollRef}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
-            onScroll={tryAgainScroll.onScroll}
-            scrollEventThrottle={16}
-            onLayout={tryAgainScroll.onLayout}
-            onContentSizeChange={tryAgainScroll.onContentSizeChange}>
-            <Text style={styles.tipText}>{tip}</Text>
-          </ScrollView>
-          <View pointerEvents="none" style={localStyles.tipBoxVerticalFades}>
-            <LinearGradient
-              colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={localStyles.tipBoxFadeTop}
-            />
-            <LinearGradient
-              colors={['rgba(255,255,255,0)', 'rgba(255,255,255,1)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={localStyles.tipBoxFadeBottom}
-            />
+        <View style={styles.tipBox}>
+          <View style={{ maxHeight: maxTipBoxHeight, overflow: 'hidden' }}>
+            <ScrollView
+              ref={tryAgainScroll.scrollRef}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingTop: 18, paddingBottom: 18 }}
+              onScroll={tryAgainScroll.onScroll}
+              scrollEventThrottle={16}
+              onLayout={tryAgainScroll.onLayout}
+              onContentSizeChange={tryAgainScroll.onContentSizeChange}>
+              <Text style={styles.tipText}>{tip}</Text>
+            </ScrollView>
           </View>
 
           {tryAgainScroll.show && (
@@ -1010,7 +962,7 @@ const localStyles = StyleSheet.create({
     alignSelf: 'center',
     width: '92%',
     maxWidth: 420,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FBFBFB',
     borderRadius: 20,
     paddingTop: 0,
     paddingHorizontal: 0,
@@ -1078,7 +1030,7 @@ const localStyles = StyleSheet.create({
     flexDirection: 'column',
   },
   modalFadeTop: {
-    width: '100%',
+    width: '89%',
     height: 30,
     marginHorizontal: 20,
   },
