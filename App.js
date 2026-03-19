@@ -557,19 +557,19 @@ export default function App() {
               <Text style={styles.tipTextName}>{tip.title}</Text>
               <Text style={styles.tipText}>{tip.text}</Text>
             </ScrollView>
+            {tipScroll.show && (
+              <Pressable
+                onPress={tipScroll.scrollToEnd}
+                hitSlop={10}
+                style={({ pressed }) => [
+                  localStyles.scrollToEndBtn,
+                  localStyles.scrollToEndBtnInTextBox,
+                  pressed && { opacity: 0.9 },
+                ]}>
+                <Text style={localStyles.scrollToEndBtnText}>↓</Text>
+              </Pressable>
+            )}
           </View>
-
-          {tipScroll.show && (
-            <Pressable
-              onPress={tipScroll.scrollToEnd}
-              hitSlop={10}
-              style={({ pressed }) => [
-                localStyles.scrollToEndBtn,
-                pressed && { opacity: 0.9 },
-              ]}>
-              <Text style={localStyles.scrollToEndBtnText}>↓</Text>
-            </Pressable>
-          )}
 
           <View
             style={[
@@ -663,19 +663,20 @@ export default function App() {
               onContentSizeChange={successScroll.onContentSizeChange}>
               <Text style={styles.tipText}>{tip}</Text>
             </ScrollView>
-          </View>
 
-          {successScroll.show && (
-            <Pressable
-              onPress={successScroll.scrollToEnd}
-              hitSlop={10}
-              style={({ pressed }) => [
-                localStyles.scrollToEndBtn,
-                pressed && { opacity: 0.9 },
-              ]}>
-              <Text style={localStyles.scrollToEndBtnText}>↓</Text>
-            </Pressable>
-          )}
+            {successScroll.show && (
+              <Pressable
+                onPress={successScroll.scrollToEnd}
+                hitSlop={10}
+                style={({ pressed }) => [
+                  localStyles.scrollToEndBtn,
+                  localStyles.scrollToEndBtnInTextBox,
+                  pressed && { opacity: 0.9 },
+                ]}>
+                <Text style={localStyles.scrollToEndBtnText}>↓</Text>
+              </Pressable>
+            )}
+          </View>
 
           <View
             style={[
@@ -731,19 +732,20 @@ export default function App() {
               onContentSizeChange={tryAgainScroll.onContentSizeChange}>
               <Text style={styles.tipText}>{tip}</Text>
             </ScrollView>
-          </View>
 
-          {tryAgainScroll.show && (
-            <Pressable
-              onPress={tryAgainScroll.scrollToEnd}
-              hitSlop={10}
-              style={({ pressed }) => [
-                localStyles.scrollToEndBtn,
-                pressed && { opacity: 0.9 },
-              ]}>
-              <Text style={localStyles.scrollToEndBtnText}>↓</Text>
-            </Pressable>
-          )}
+            {tryAgainScroll.show && (
+              <Pressable
+                onPress={tryAgainScroll.scrollToEnd}
+                hitSlop={10}
+                style={({ pressed }) => [
+                  localStyles.scrollToEndBtn,
+                  localStyles.scrollToEndBtnInTextBox,
+                  pressed && { opacity: 0.9 },
+                ]}>
+                <Text style={localStyles.scrollToEndBtnText}>↓</Text>
+              </Pressable>
+            )}
+          </View>
 
           <View
             style={[
@@ -1130,6 +1132,12 @@ const localStyles = StyleSheet.create({
   },
   scrollToEndBtnInModal: {
     right: 14,
+    bottom: 20,
+    backgroundColor: '#622626',
+    borderWidth: 0,
+  },
+  scrollToEndBtnInTextBox: {
+    right: 20,
     bottom: 20,
     backgroundColor: '#622626',
     borderWidth: 0,
