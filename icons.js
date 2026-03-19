@@ -5,6 +5,12 @@ export const icons = {
 <path d="M1.5 15.9294L17.1164 3.10161C18.2674 2.15611 19.9243 2.14893 21.0835 3.08442L37 15.9294" stroke="#EFEFEF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
   `,
+  homeRed: `
+    <svg width="39" height="32" viewBox="0 0 39 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 16.1133V26.9717C10 28.7067 11.4066 30.1133 13.1416 30.1133H25.8584C27.5935 30.1133 29 28.7067 29 26.9717V16.1133" stroke="#622626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1.50003 15.0421L17.1164 2.21441C18.2675 1.2689 19.9243 1.26172 21.0835 2.19722L37 15.0421" stroke="#622626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
 
   more: `
 <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">

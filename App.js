@@ -175,6 +175,7 @@ export default function App() {
   const emotion = Object.hasOwn(screenState, 'emotion')
     ? screenState.emotion
     : '';
+  const isTipLikeScreen = [SCREENS.TIP, SCREENS.CHECK, SCREENS.SUCCESS, SCREENS.TRY_AGAIN].includes(screen);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = React.useState(false);
   const [fontsLoaded] = useFonts({
     Geologica_400Regular,
@@ -297,6 +298,8 @@ export default function App() {
   function Header() {
     const safeInsets = useSafeAreaInsets();
     const isHome = screen === SCREENS.HOME;
+    const isDarkTextEmotion = screenState.emotion === 'frustrated' || screenState.emotion === 'irritated';
+    const useHomeRed = isHome || ((screen === SCREENS.TIP || screen === SCREENS.CHECK) && isDarkTextEmotion);
     return (
       <View
         style={{
@@ -317,10 +320,9 @@ export default function App() {
             ]}
             hitSlop={10}>
             <SvgXml
-              xml={icons.home}
+              xml={useHomeRed ? icons.homeRed : icons.home}
               width={30}
               height={30}
-              color="#622626"
               style={{ opacity: 0.7 }}
             />
           </Pressable>
@@ -518,8 +520,8 @@ export default function App() {
     const insets = useSafeAreaInsets();
     const tipScroll = useScrollToEndAffordance();
     const maxTipBoxHeight = Math.min(
-      440,
-      Math.max(600, Math.floor((height - insets.top - insets.bottom) * 0.42))
+      480,
+      Math.max(240, Math.floor((height - insets.top - insets.bottom) * 0.42))
     );
     const emotionKey = screenState.emotion;
     const meta = EMOTIONS.find((e) => e.key === emotionKey);
@@ -622,7 +624,7 @@ export default function App() {
     const insets = useSafeAreaInsets();
     const successScroll = useScrollToEndAffordance();
     const maxTipBoxHeight = Math.min(
-      440,
+      480,
       Math.max(220, Math.floor((height - insets.top - insets.bottom) * 0.38))
     );
     return (
@@ -691,7 +693,7 @@ export default function App() {
     const insets = useSafeAreaInsets();
     const tryAgainScroll = useScrollToEndAffordance();
     const maxTipBoxHeight = Math.min(
-      440,
+      480,
       Math.max(220, Math.floor((height - insets.top - insets.bottom) * 0.38))
     );
     // беремо випадкову пораду для "невдалось"
@@ -777,6 +779,7 @@ export default function App() {
       <Animated.View
         style={[
           styles.container,
+          isTipLikeScreen ? { marginTop: -30 } : null,
           { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
         ]}>
         {screen === SCREENS.HOME && <Home />}
