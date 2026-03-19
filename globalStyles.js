@@ -41,7 +41,7 @@ buttonsRow: {
     paddingHorizontal: 12,
     borderRadius: 12,
   },
-  headerBtnDisabled: { opacity: 0.6 },
+  headerBtnDisabled: { opacity: 0.7 },
   headerBtnText: {
     color: '#622626',
     fontWeight: '700',
@@ -255,7 +255,7 @@ fontSize: 40,
 
     sucBtn: {
     backgroundColor: '#7D6C2C',
-    opacity: 0.5,
+    opacity: 0.6,
     paddingVertical: 12,
     borderRadius: 14,
     alignItems: 'center',

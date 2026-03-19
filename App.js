@@ -316,7 +316,13 @@ export default function App() {
               pressed && !isHome && { opacity: 0.8 },
             ]}
             hitSlop={10}>
-            <SvgXml xml={icons.home} width={30} height={30} color="#EFEFEF" />
+            <SvgXml
+              xml={icons.home}
+              width={30}
+              height={30}
+              color="#622626"
+              style={{ opacity: 0.7 }}
+            />
           </Pressable>
         </View>
       </View>
