@@ -521,7 +521,7 @@ export default function App() {
     const tipScroll = useScrollToEndAffordance();
     const maxTipBoxHeight = Math.min(
       480,
-      Math.max(240, Math.floor((height - insets.top - insets.bottom) * 0.42))
+      Math.max (400, Math.floor((height - insets.top - insets.bottom) * 0.42))
     );
     const emotionKey = screenState.emotion;
     const meta = EMOTIONS.find((e) => e.key === emotionKey);
