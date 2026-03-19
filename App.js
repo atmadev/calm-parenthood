@@ -5,6 +5,7 @@ import {
   Pressable,
   Modal,
   ScrollView,
+  Image,
   useWindowDimensions,
   Platform,
   Animated,
@@ -840,6 +841,15 @@ export default function App() {
             />
           </Animated.View>
         )}
+        {/* Texture overlay for all screens */}
+        <View
+          style={StyleSheet.absoluteFillObject}
+          pointerEvents="none">
+          <Image
+            source={require('./assets/bgtexturepng.png')}
+            style={{ width: '100%', height: '100%', resizeMode: 'cover', opacity: 1}}
+          />
+        </View>
         <View style={StyleSheet.absoluteFillObject}>{Content}</View>
         <HomeDisclaimerLink />
       </View>
