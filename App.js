@@ -344,7 +344,7 @@ export default function App() {
         return { bg: '#C8936E', text: '#FBFBFB', sub: '#FBFBFB' };
       case 'frustrated':
       default:
-        return { bg: '#E9D9A8', text: '#622626', sub: '#622626' };
+        return { bg: '#E0CE91', text: '#622626', sub: '#622626' };
     }
   };
 
