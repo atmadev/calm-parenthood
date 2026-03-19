@@ -383,6 +383,8 @@ export default function App() {
 
   function HomeDisclaimerLink() {
     const insets = useSafeAreaInsets();
+    const useBurgundyDisclaimer =
+      screen === SCREENS.HOME || isDarkTextEmotion(screenState.emotion);
     return (
       <View
         pointerEvents="box-none"
@@ -397,7 +399,13 @@ export default function App() {
             localStyles.disclaimerPressable,
             pressed && { opacity: 0.85 },
           ]}>
-          <Text style={localStyles.disclaimerText}>{DISCLAIMER_SHORT}</Text>
+          <Text
+            style={[
+              localStyles.disclaimerText,
+              useBurgundyDisclaimer && { color: '#622626', opacity: 0.6 },
+            ]}>
+            {DISCLAIMER_SHORT}
+          </Text>
         </Pressable>
       </View>
     );
