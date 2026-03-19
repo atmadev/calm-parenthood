@@ -103,7 +103,7 @@ buttonsRow: {
     fontFamily: 'Geologica_700Bold',
     fontSize: 16,
     lineHeight: 22,
-    color: '#5D5D5D',
+    color: '#545454',
     textAlign: 'center',
       marginBottom: 8,
       
@@ -113,7 +113,7 @@ buttonsRow: {
     fontFamily: 'Geologica_400Regular',
     fontSize: 16,
     lineHeight: 22,
-    color: '#5D5D5D',
+    color: '#545454',
     textAlign: 'left',
     marginBottom: -10
     ,
