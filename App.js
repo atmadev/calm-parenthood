@@ -510,7 +510,7 @@ export default function App() {
     const tipScroll = useScrollToEndAffordance();
     const maxTipBoxHeight = Math.min(
       440,
-      Math.max(240, Math.floor((height - insets.top - insets.bottom) * 0.42))
+      Math.max(600, Math.floor((height - insets.top - insets.bottom) * 0.42))
     );
     const emotionKey = screenState.emotion;
     const meta = EMOTIONS.find((e) => e.key === emotionKey);
@@ -562,21 +562,29 @@ export default function App() {
               <Text style={localStyles.scrollToEndBtnText}>↓</Text>
             </Pressable>
           )}
-        </View>
 
-        <View style={styles.buttonsRow}>
-          <SecondaryButton
-            title="Спробую інше"
-            onPress={() => showRandomTip()}
-            style={{ flex: 1 }}
-          />
-          <PrimaryButton
-            title="Виконано"
-            onPress={() => {
-              animateToScreenState({ screen: SCREENS.CHECK, emotion });
-            }}
-            style={{ flex: 1 }}
-          />
+          <View
+            style={[
+              styles.buttonsRow,
+              {
+                marginTop: -10,
+                paddingHorizontal: 0,
+                paddingBottom: 20,
+              },
+            ]}>
+            <SecondaryButton
+              title="Спробую інше"
+              onPress={() => showRandomTip()}
+              style={{ flex: 1 }}
+            />
+            <PrimaryButton
+              title="Виконано"
+              onPress={() => {
+                animateToScreenState({ screen: SCREENS.CHECK, emotion });
+              }}
+              style={{ flex: 1 }}
+            />
+          </View>
         </View>
       </CenterCard>
     );
@@ -672,14 +680,22 @@ export default function App() {
               <Text style={localStyles.scrollToEndBtnText}>↓</Text>
             </Pressable>
           )}
-        </View>
 
-        <View style={styles.buttonsRow}>
-          <PrimaryButton
-            title="На головну"
-            style={styles.sucBtn}
-            onPress={goHome}
-          />
+          <View
+            style={[
+              styles.buttonsRow,
+              {
+                marginTop: -15,
+                paddingHorizontal:0,
+                paddingBottom:20,
+              },
+            ]}>
+            <PrimaryButton
+              title="На головну"
+              style={[styles.sucBtn, { flex: 1 }]}
+              onPress={goHome}
+            />
+          </View>
         </View>
       </CenterCard>
     );
@@ -748,19 +764,28 @@ export default function App() {
               <Text style={localStyles.scrollToEndBtnText}>↓</Text>
             </Pressable>
           )}
-        </View>
 
-        <View style={styles.buttonsRow}>
-          <SecondaryButton
-            title="Спробую ще"
-            onPress={() => showRandomTip()}
-            style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
-          />
-          <PrimaryButton
-            title="На головну"
-            onPress={goHome}
-            style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
-          />
+          <View
+            style={[
+              styles.buttonsRow,
+              {
+                marginTop: -10,
+                paddingHorizontal: 0,
+                paddingBottom: 20
+              ,
+              },
+            ]}>
+            <SecondaryButton
+              title="Спробую ще"
+              onPress={() => showRandomTip()}
+              style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
+            />
+            <PrimaryButton
+              title="На головну"
+              onPress={goHome}
+              style={{ flex: 1, backgroundColor: '#5A6394', opacity: 0.7 }}
+            />
+          </View>
         </View>
       </CenterCard>
     );
@@ -846,11 +871,11 @@ function gradientColorsFor(screen) {
     return ['#F7F2E4', '#FBFBFB'];
   }
   if ([SCREENS.TIP, SCREENS.CHECK].includes(screen)) {
-    return ['#F5A488', '#F1B4BB', '#EB9EA7']; // 1-3 екрани
+    return ['#9D5354', '#C8936E']; // 1-3 екрани
   } else if (screen === SCREENS.SUCCESS) {
-    return ['#EAD2AC', '#F0F0F0']; // success
+    return ['#A9A57E', '#F7F2E4']; // success
   } else if (screen === SCREENS.TRY_AGAIN) {
-    return ['#657ED1', '#A2C5E4']; // try again
+    return ['#263062', '#AEBDC7']; // try again
   }
   return [];
 }

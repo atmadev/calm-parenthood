@@ -83,7 +83,7 @@ buttonsRow: {
     borderRadius: 20,
     paddingHorizontal: 20,
     width: 340, // завжди вся ширина картки
-    marginTop: 30,
+    marginTop: 10,
 
 // тінь для iOS
   shadowColor: '#000',
@@ -99,7 +99,7 @@ buttonsRow: {
     fontFamily: 'Geologica_700Bold',
     fontSize: 16,
     lineHeight: 22,
-    color: '#7D6C2C',
+    color: '#5D5D5D',
     textAlign: 'center',
       marginBottom: 8,
       
@@ -109,8 +109,10 @@ buttonsRow: {
     fontFamily: 'Geologica_400Regular',
     fontSize: 16,
     lineHeight: 22,
-    color: '#7D6C2C',
+    color: '#5D5D5D',
     textAlign: 'left',
+    marginBottom: -10
+    ,
   },
   buttonsRow: {
     flexDirection: 'row',
@@ -132,12 +134,12 @@ buttonsRow: {
 
   titleGreen: {
     fontFamily: 'Kurale_400Regular',
-    color: '#7D6C2C',
+    color: '#524B31',
     fontSize: 35,
     fontWeight: '500',
     textAlign: 'center',
     lineHeight: 37,
-    marginBottom: -5, // відстань між заголовком і контентом
+    marginBottom: 5, // відстань між заголовком і контентом
   },
 
   titleWhite: {
