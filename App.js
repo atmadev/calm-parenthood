@@ -323,6 +323,7 @@ export default function App() {
               xml={useHomeRed ? icons.homeRed : icons.home}
               width={30}
               height={30}
+              pointerEvents="none"
               style={{ opacity: 0.7 }}
             />
           </Pressable>
