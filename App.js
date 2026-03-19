@@ -163,7 +163,7 @@ export default function App() {
     screen: SCREENS.HOME,
   });
   const [currentGradientColors, setCurrentGradientColors] = React.useState(
-    gradientColorsFor(SCREENS.HOME)
+    gradientColorsForState({ screen: SCREENS.HOME })
   );
   const [nextGradientColors, setNextGradientColors] = React.useState([]);
 
@@ -190,20 +190,16 @@ export default function App() {
     locked = true;
     setTimeout(() => (locked = false), 300);
 
-    if (screen === state.screen) {
-      setScreenState(state);
-      return;
-    }
-
     const baseConfig = {
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
       duration: 250,
     };
 
+    const targetGradientColors = gradientColorsForState(state);
+
     if (
-      gradientColorsFor(state.screen).toString() !=
-      currentGradientColors.toString()
+      targetGradientColors.toString() !== currentGradientColors.toString()
     ) {
       Animated.timing(gradientToFadeAnim, {
         ...baseConfig,
@@ -215,10 +211,15 @@ export default function App() {
             setNextGradientColors([]);
             setTimeout(() => gradientToFadeAnim.setValue(0), 100);
           });
-          return gradientColorsFor(state.screen);
+          return targetGradientColors;
         });
       });
-      setNextGradientColors(gradientColorsFor(state.screen));
+      setNextGradientColors(targetGradientColors);
+    }
+
+    if (screen === state.screen) {
+      setScreenState(state);
+      return;
     }
 
     Animated.parallel([
@@ -336,6 +337,9 @@ export default function App() {
         return { bg: '#E9D9A8', text: '#622626', sub: '#622626' };
     }
   };
+
+  const isDarkTextEmotion = (key) =>
+    key === 'frustrated' || key === 'irritated';
 
   function Home() {
     return (
@@ -514,11 +518,15 @@ export default function App() {
     );
     const emotionKey = screenState.emotion;
     const meta = EMOTIONS.find((e) => e.key === emotionKey);
+    const useDarkText = isDarkTextEmotion(emotionKey);
 
     return (
       <CenterCard>
         <Text style={styles.tipEmoji}>{meta.emoji}</Text>
-        <Text style={styles.tipEmotion}>{meta.label}</Text>
+        <Text
+          style={useDarkText ? styles.tipEmotion : styles.tipEmotionLight}>
+          {meta.label}
+        </Text>
 
         <View
           style={[
@@ -591,6 +599,9 @@ export default function App() {
   }
 
   function Check() {
+    const useDarkText = isDarkTextEmotion(emotion);
+    const buttonBgStyle = useDarkText ? null : styles.checkBtnLightBg;
+
     return (
       <CenterCard>
         <View
@@ -601,16 +612,17 @@ export default function App() {
           <View style={{ marginBottom: 10 }}>
             <Text style={styles.emojiTitle}>🥺</Text>
           </View>
-          <Text style={styles.title}>
+          <Text style={useDarkText ? styles.title : styles.titleWhite}>
             Чи вдалось{'\n'}понизити градус{'\n'}напруги?
           </Text>
         </View>
         <View style={styles.buttonsRow}>
-          <PrimaryButton
-            title="Так"
-              onPress={success}
+          <PrimaryButton title="Так" onPress={success} style={buttonBgStyle} />
+          <SecondaryButton
+            title="Ні"
+            onPress={tryAgain}
+            style={buttonBgStyle}
           />
-          <SecondaryButton title="Ні" onPress={tryAgain} />
         </View>
       </CenterCard>
     );
@@ -866,17 +878,37 @@ export default function App() {
 
 /* ====== утиліти / кнопки ====== */
 
-function gradientColorsFor(screen) {
+const EMOTION_GRADIENTS = {
+  frustrated: ['#E9D9A8', '#F7F2E4'],
+  irritated: ['#C8936E', '#DBCB97'],
+  angry: ['#9D5354', '#C8936E'],
+  furious: ['#622626', '#9D5354'],
+};
+
+function gradientColorsForState(state) {
+  const screen = state?.screen;
+  const emotionKey = state?.emotion;
+
   if (screen === SCREENS.HOME) {
     return ['#F7F2E4', '#FBFBFB'];
   }
-  if ([SCREENS.TIP, SCREENS.CHECK].includes(screen)) {
-    return ['#9D5354', '#C8936E']; // 1-3 екрани
-  } else if (screen === SCREENS.SUCCESS) {
-    return ['#A9A57E', '#F7F2E4']; // success
-  } else if (screen === SCREENS.TRY_AGAIN) {
-    return ['#263062', '#AEBDC7']; // try again
+
+  if (screen === SCREENS.TIP || screen === SCREENS.CHECK) {
+    if (emotionKey && EMOTION_GRADIENTS[emotionKey]) {
+      return EMOTION_GRADIENTS[emotionKey];
+    }
+    // Fallback to generic tip/check gradient if emotion is missing.
+    return ['#9D5354', '#C8936E'];
   }
+
+  if (screen === SCREENS.SUCCESS) {
+    return ['#A9A57E', '#F7F2E4'];
+  }
+
+  if (screen === SCREENS.TRY_AGAIN) {
+    return ['#263062', '#AEBDC7'];
+  }
+
   return [];
 }
 
@@ -923,7 +955,7 @@ function SecondaryButton({ title, onPress, style }) {
 
 function EmotionButton({ emotionKey, theme, emoji, title, subtitle, onPress }) {
   const bg = theme?.bg ?? '#FBFBFB';
-  const text = theme?.text ?? '#804550';
+  const text = theme?.text ?? '#622626';
   const sub = theme?.sub ?? '#FBFBFB';
   return (
     <Pressable
@@ -999,7 +1031,7 @@ const localStyles = StyleSheet.create({
   modalTitle: {
     flex: 1,
     fontFamily: 'Geologica_700Bold',
-    color: '#804550',
+    color: '#622626',
     fontSize: 20,
     lineHeight: 26,
     textAlign: 'center',
@@ -1018,7 +1050,7 @@ const localStyles = StyleSheet.create({
   },
   modalCloseText: {
     fontFamily: 'Geologica_700Bold',
-    color: '#804550',
+    color: '#622626',
     fontSize: 18,
     lineHeight: 18,
   },
@@ -1085,7 +1117,7 @@ const localStyles = StyleSheet.create({
     fontFamily: 'Geologica_400Regular',
     fontSize: 14,
     lineHeight: 20,
-    color: '#804550',
+    color: '#622626',
     textAlign: 'left',
   },
 

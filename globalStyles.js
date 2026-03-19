@@ -74,7 +74,14 @@ buttonsRow: {
   tipEmotion: {
     fontFamily: 'Kurale_400Regular',
     fontSize: 35,
-    color: '#804550',
+    color: '#622626',
+    textAlign: 'center',
+    marginTop: -20,
+  },
+  tipEmotionLight: {
+    fontFamily: 'Kurale_400Regular',
+    fontSize: 35,
+    color: '#FBFBFB',
     textAlign: 'center',
     marginTop: -20,
   },
@@ -203,14 +210,14 @@ fontSize: 40,
   emoBtnText: {
     flex: 1,
     fontFamily: 'Geologica_700Bold',
-    color: '#804550',
+    color: '#622626',
     fontSize: 20,
     lineHeight: 24,
     marginLeft: 12,
   },
   btnSubText: {
     fontFamily: 'Geologica_400Regular',
-    color: '#804550',
+    color: '#622626',
     fontSize: 16,
     fontWeight: '500',
     marginLeft: 14,
@@ -230,7 +237,7 @@ fontSize: 40,
   },
 
   tipBtn: {
-    backgroundColor: '#B77481',
+    backgroundColor: '#9D5354',
     opacity: 0.7,
     paddingVertical: 12,
     borderRadius: 14,
@@ -239,6 +246,14 @@ fontSize: 40,
     width: '45%',
     height: 45,
     marginTop: 30,
+  },
+
+  checkBtnDarkBg: {
+    // use default tipBtn background; no override needed
+  },
+  checkBtnLightBg: {
+    backgroundColor: '#622626',
+    opacity: 0.9,
   },
 
     sucBtn: {
