@@ -535,7 +535,9 @@ export default function App() {
     );
     const emotionKey = screenState.emotion;
     const meta = EMOTIONS.find((e) => e.key === emotionKey);
-    const useDarkText = isDarkTextEmotion(emotionKey);
+    // Tip screen: only `frustrated` should use the dark title color.
+    // `irritated` should use the light title color (#FBFBFB).
+    const useDarkText = emotionKey === 'frustrated';
 
     return (
       <CenterCard>
