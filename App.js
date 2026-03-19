@@ -48,42 +48,42 @@ let locked = false;
 const DISCLAIMER_SHORT =
   'Застосунок не заміняє\nкваліфіковану психологічну допомогу';
 
-const DISCLAIMER_MODAL = {
-  title: 'Важлива інформація',
-  intro: [
-    'Застосунок “Calm Parenthood” — це інструмент швидкої самодопомоги, а не лікування.',
-    'Він пропонує прості вправи й підказки, щоб знизити напругу “тут і зараз”, коли емоції піднімаються через складні моменти з дітьми.',
-  ],
-  sections: [
-    {
-      title: 'Чому застосунок не заміняє психолога/психотерапевта',
-      bullets: [
-        'Немає діагностики та професійної оцінки стану.',
-        'Поради загальні й не враховують вашу історію, контекст і потреби.',
-        'Застосунок не забезпечує терапевтичний процес і підтримувальний контакт із фахівцем.',
-        'Не підходить для кризових ситуацій або станів із високими ризиками.',
-        '“Стало легше” після вправи не означає, що причина труднощів вирішена.',
-      ],
-    },
-    {
-      title: 'Коли варто звернутися по професійну допомогу',
-      bullets: [
-        'Емоційні зриви повторюються часто або стають сильнішими.',
-        'Є постійна тривога, безнадія, апатія, проблеми зі сном або апетитом.',
-        'З’являються думки про самопошкодження/суїцид або страх, що можете нашкодити собі чи дитині.',
-        'У сім’ї загострюються конфлікти або з’являється насильство.',
-      ],
-    },
-    {
-      title: 'Про важливе',
-      paragraphs: [
-        'Просити підтримки — нормально. Цей застосунок може допомогти зробити паузу й м’якше пройти гострий момент, але не замінює кваліфіковану психологічну/психотерапевтичну допомогу.',
-      ],
-    },
-  ],
-  footer:
-    'Якщо ви зараз у небезпеці — зверніться до екстрених служб у вашій країні.',
-};
+  const DISCLAIMER_MODAL = {
+    title: 'Важлива інформація',
+    intro: [
+      '«Я злюсь» є інструментом швидкої самодопомоги та має виключно пізнавально-інформаційний характер. Він не є засобом лікування.',
+      'Застосунок пропонує прості вправи та підказки, які можуть допомогти знизити рівень напруги «тут і зараз», коли емоції наростають у складних ситуаціях із дітьми.',
+    ],
+    sections: [
+      {
+        title: 'Чому застосунок не замінює психолога/психотерапевта',
+        bullets: [
+          'Не передбачає діагностики чи професійної оцінки стану.',
+          'Рекомендації є загальними й не враховують ваш індивідуальний досвід, контекст і потреби.',
+          'Не забезпечує терапевтичного процесу та підтримувального контакту з фахівцем.',
+          'Не підходить для кризових ситуацій або станів із підвищеним ризиком.',
+          'Полегшення після вправ не означає, що причину труднощів вирішено.',
+        ],
+      },
+      {
+        title: 'Коли варто звернутися по професійну допомогу',
+        bullets: [
+          'Емоційні зриви повторюються часто або стають інтенсивнішими.',
+          'Є постійна тривога, відчуття безнадії, апатія, проблеми зі сном чи апетитом.',
+          'З’являються думки про самопошкодження/суїцид або страх, що можете нашкодити собі чи дитині.',
+          'У сім’ї загострюються конфлікти або з’являється насильство.',
+        ],
+      },
+      {
+        title: 'Важливо',
+        paragraphs: [
+          'Просити підтримки — це нормально. Застосунок може допомогти зробити паузу, щоб повернути собі ясність, внутрішню опору та здатність діяти усвідомлено, а не з імпульсу. Водночас він не замінює кваліфіковану психологічну чи психотерапевтичну допомогу.',
+        ],
+      },
+    ],
+    footer:
+      'Якщо ви відчуваєте, що не справляєтесь або перебуваєте в небезпеці — будь ласка, зверніться по кваліфіковану психологічну допомогу до спеціаліста у вашій країні.',
+  };
 
 function useScrollToEndAffordance() {
   const scrollRef = React.useRef(null);
@@ -417,6 +417,7 @@ export default function App() {
               { marginBottom: Math.max(16, insets.bottom + 12) },
             ]}>
             <View style={localStyles.modalHeaderRow}>
+              <Text style={localStyles.modalTitle}>{DISCLAIMER_MODAL.title}</Text>
               <Pressable
                 onPress={() => setIsDisclaimerOpen(false)}
                 hitSlop={10}
@@ -426,8 +427,6 @@ export default function App() {
                 ]}>
                 <Text style={localStyles.modalCloseText}>✕</Text>
               </Pressable>
-              <Text style={localStyles.modalTitle}>{DISCLAIMER_MODAL.title}</Text>
-              <View style={localStyles.modalHeaderSpacer} />
             </View>
 
             <View style={localStyles.modalScrollWrap}>
@@ -1013,28 +1012,35 @@ const localStyles = StyleSheet.create({
     maxWidth: 420,
     backgroundColor: '#ffffff',
     borderRadius: 20,
-    padding: 16,
+    paddingTop: 0,
+    paddingHorizontal: 0,
     paddingBottom: 0,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 6,
   },
   modalHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
     gap: 12,
-    paddingBottom: 0,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#622626',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   modalTitle: {
     flex: 1,
     fontFamily: 'Geologica_700Bold',
-    color: '#622626',
-    fontSize: 20,
-    lineHeight: 26,
-    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 18,
+    lineHeight: 22,
+    textAlign: 'left',
+    textTransform: 'uppercase',
+    paddingLeft: 3,
   },
   modalHeaderSpacer: {
     width: 38,
@@ -1046,11 +1052,11 @@ const localStyles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(128,69,80,0.08)',
+    backgroundColor: 'rgba(255,255,255,0.12)',
   },
   modalCloseText: {
     fontFamily: 'Geologica_700Bold',
-    color: '#622626',
+    color: '#FFFFFF',
     fontSize: 18,
     lineHeight: 18,
   },
@@ -1058,9 +1064,10 @@ const localStyles = StyleSheet.create({
     maxHeight: 520,
   },
   modalScrollContent: {
-    paddingTop: 12,
+    paddingTop: 16,
+    paddingHorizontal: 20,
     paddingBottom: 24,
-    gap: 10,
+    gap: 12,
   },
   modalScrollWrap: {
     position: 'relative',
@@ -1072,15 +1079,17 @@ const localStyles = StyleSheet.create({
   },
   modalFadeTop: {
     width: '100%',
-    height: 20,
+    height: 30,
+    marginHorizontal: 20,
   },
   modalFadeBottom: {
-    width: '100%',
-    height: 20,
+    width: '89%',
+    height: 40,
+    marginHorizontal: 20,
   },
   modalSectionTitle: {
     fontFamily: 'Geologica_700Bold',
-    color: '#7D6C2C',
+    color: '#622626',
     fontSize: 16,
     lineHeight: 22,
     marginBottom: 4,
@@ -1089,7 +1098,7 @@ const localStyles = StyleSheet.create({
     fontFamily: 'Geologica_400Regular',
     fontSize: 16,
     lineHeight: 22,
-    color: '#7D6C2C',
+    color: '#444444',
     textAlign: 'left',
   },
   modalBulletRow: {
@@ -1100,7 +1109,7 @@ const localStyles = StyleSheet.create({
   },
   modalBulletGlyph: {
     fontFamily: 'Geologica_700Bold',
-    color: '#7D6C2C',
+    color: '#622626',
     fontSize: 16,
     lineHeight: 22,
     marginTop: 0,
@@ -1110,12 +1119,12 @@ const localStyles = StyleSheet.create({
     fontFamily: 'Geologica_400Regular',
     fontSize: 16,
     lineHeight: 22,
-    color: '#7D6C2C',
+    color: '#444444',
   },
   modalFooterText: {
     marginTop: 14,
-    fontFamily: 'Geologica_400Regular',
-    fontSize: 14,
+    fontFamily: 'Geologica_700Bold',
+    fontSize: 16,
     lineHeight: 20,
     color: '#622626',
     textAlign: 'left',
@@ -1150,13 +1159,15 @@ const localStyles = StyleSheet.create({
     borderColor: 'rgba(125,108,44,0.18)',
   },
   scrollToEndBtnInModal: {
-    right: 0,
-    bottom: 16,
+    right: 14,
+    bottom: 20,
+    backgroundColor: '#622626',
+    borderWidth: 0,
   },
   scrollToEndBtnText: {
     fontFamily: 'Geologica_700Bold',
     fontSize: 18,
     lineHeight: 18,
-    color: '#7D6C2C',
+    color: '#FFFFFF',
   },
 });
