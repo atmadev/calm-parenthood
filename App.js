@@ -176,7 +176,6 @@ export default function App() {
   const emotion = Object.hasOwn(screenState, 'emotion')
     ? screenState.emotion
     : '';
-  const isTipLikeScreen = [SCREENS.TIP, SCREENS.CHECK, SCREENS.SUCCESS, SCREENS.TRY_AGAIN].includes(screen);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = React.useState(false);
   const [fontsLoaded] = useFonts({
     Geologica_400Regular,
@@ -539,7 +538,7 @@ export default function App() {
     const useDarkText = emotionKey === 'frustrated' || emotionKey === 'irritated';
 
     return (
-      <CenterCard>
+      <CenterCard tipLike>
         <Text style={styles.tipEmoji}>{meta.emoji}</Text>
         <Text
           style={useDarkText ? styles.tipEmotion : styles.tipEmotionLight}>
@@ -605,7 +604,7 @@ export default function App() {
     const buttonBgStyle = useDarkText ? null : styles.checkBtnLightBg;
 
     return (
-      <CenterCard>
+      <CenterCard tipLike>
         <View
           style={{
             textAlign: 'center',
@@ -639,7 +638,7 @@ export default function App() {
       Math.max(220, Math.floor((height - insets.top - insets.bottom) * 0.38))
     );
     return (
-      <CenterCard>
+      <CenterCard tipLike>
         <View
           style={{
             textAlign: 'center',
@@ -710,7 +709,7 @@ export default function App() {
     );
     // беремо випадкову пораду для "невдалось"
     return (
-      <CenterCard>
+      <CenterCard tipLike>
         <View
           style={{
             textAlign: 'center',
@@ -792,7 +791,6 @@ export default function App() {
       <Animated.View
         style={[
           styles.container,
-          isTipLikeScreen ? { marginTop: -30 } : null,
           { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
         ]}>
         {screen === SCREENS.HOME && <Home />}
@@ -894,9 +892,9 @@ function gradientColorsForState(state) {
   return [];
 }
 
-function CenterCard({ title, children }) {
+function CenterCard({ title, children, tipLike }) {
   return (
-    <View style={styles.centerWrap}>
+    <View style={tipLike ? styles.centerWrapTip : styles.centerWrap}>
       {title && (
         <Text style={[styles.title, { marginBottom: 50 }]}>{title}</Text>
       )}

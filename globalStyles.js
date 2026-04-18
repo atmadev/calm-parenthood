@@ -62,7 +62,12 @@ buttonsRow: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // minHeight: 520,
+  },
+  centerWrapTip: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 60,
   },
 
   tipEmoji: {
