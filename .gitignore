@@ -137,3 +137,10 @@ dist
 
 # Expo
 .expo/
+
+credentials.json
+credentials/
+*.p12
+*.p8
+*.mobileprovision
+.claude/settings.local.json
