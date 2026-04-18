@@ -144,3 +144,5 @@ credentials/
 *.p8
 *.mobileprovision
 .claude/settings.local.json
+/ios
+/android

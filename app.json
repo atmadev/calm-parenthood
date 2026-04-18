@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "calm-parenthood",
-    "slug": "snack-ea1d04f6-64e5-452a-91cd-720f8979d08a",
+    "slug": "calm-parenthood",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
@@ -13,20 +13,30 @@
       "backgroundColor": "#FBFBFB"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.oleksandr-koryttsev.calm-parenthood",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FBFBFB"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.oleksandrkoryttsev.calmparenthood"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0a89b1b6-efe6-4ada-8179-e670e9df586b"
+      }
+    }
   }
 }
