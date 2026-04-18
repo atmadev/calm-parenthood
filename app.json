@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "calm-parenthood",
+    "name": "Я злюсь",
     "slug": "calm-parenthood",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,7 +13,7 @@
       "backgroundColor": "#FBFBFB"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.oleksandr-koryttsev.calm-parenthood",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -30,9 +30,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font"],
     "extra": {
       "eas": {
         "projectId": "0a89b1b6-efe6-4ada-8179-e670e9df586b"
